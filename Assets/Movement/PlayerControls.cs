@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerControls : MonoBehaviour {
 
 	Rigidbody2D body;
+	float distToGround;
 
 	float acceleration;
 	float friction;
@@ -14,54 +15,50 @@ public class PlayerControls : MonoBehaviour {
 	public float friction_Ground = 25;
 	public float jumpForce = 3;
 
-	Vector3 velocity = Vector3.zero;
-	Vector2 input;
-
-	bool canJump = false;
-
 	// Use this for initialization
 	void Start () {
 		body = GetComponent<Rigidbody2D> ();
+		distToGround = GetComponent<BoxCollider2D> ().bounds.extents.y;
+	}
+
+	bool isGrounded() {
+		float x = transform.position.x;
+		float y = transform.position.y - distToGround - 0.001f;
+
+		Debug.DrawRay(new Vector3(x, y, 1), Vector3.down, Color.green);
+		RaycastHit2D hit = Physics2D.Raycast (new Vector2(x, y), Vector2.down);
+		if (hit.collider != null && hit.distance < 0.02f) {
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		//get the input
-		input = Vector2.zero;
-		if (Input.GetKey (KeyCode.RightArrow)) { 
-				input.x += 1.0f;
-		}
-		if (Input.GetKey (KeyCode.LeftArrow)) {
-				input.x -= 1.0f;
-		} 
-		if (Input.GetKey (KeyCode.UpArrow) && canJump) {
-			//input.y += 1.0f;
-			canJump = false;
+		// running
+		Vector2 direction = new Vector2(Input.GetAxisRaw ("Horizontal"), 0);
+
+		bool grounded = isGrounded();
+
+		// jump
+		if (Input.GetKey (KeyCode.UpArrow) && grounded) {
 			body.AddForce (new Vector2 (0, jumpForce), ForceMode2D.Impulse);
 		}
 
-		if (Input.GetKey(KeyCode.DownArrow)) input.y -= 1.0f;
+		// body slam
+		//if (Input.GetKey(KeyCode.DownArrow)) 
+		//	input. -= 1.0f;
 
 		//make sure the input doesn't exceed 1 if we go diagonally
-		if (input != Vector2.zero)
-			input.Normalize();
+		//if (input != Vector2.zero)
+		//	input.Normalize();
 
-		UpdateRigidBody ();
-	}
-
-	void OnCollisionEnter2D(){
-		canJump = true;
-	}
-
-	void UpdateRigidBody()
-	{
-		if (body.velocity.y < 0) {
-			print ("In air");
+		if (!grounded) {
 			friction = friction_Air; 
 			acceleration = acceleration_Air; 
 		}
 		else {
-			print ("Grounded");
 			friction = friction_Ground; 
 			acceleration = acceleration_Ground; 
 		}
@@ -69,11 +66,9 @@ public class PlayerControls : MonoBehaviour {
 		body.velocity -= body.velocity * friction * Time.deltaTime;
 
 		//Apply acceleration to velocity
-		body.velocity += input * acceleration * Time.deltaTime;
-
-		//The rigid body does its own position integration
+		body.velocity += direction * acceleration * Time.deltaTime;
 
 		//We store the velocity in our own variable, just so we can print it on screen
-		velocity = body.velocity;
+		//velocity = body.velocity;
 	}
 }
