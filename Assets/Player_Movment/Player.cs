@@ -102,6 +102,9 @@ public class Player : MonoBehaviour
                 velocity.y = maxJumpVelocity;
             }
         }
+		if (Input.GetButton("PS4_O"+ player) && !controller.collisions.below){
+			velocity.y = -maxJumpHeight * 10;
+		}
 		if (Input.GetButton("PS4_X"+ player))
         {
             if (velocity.y > minJumpVelocity)
