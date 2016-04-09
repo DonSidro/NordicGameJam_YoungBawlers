@@ -35,7 +35,7 @@ public class ParticleGenerator : MonoBehaviour {
 			DynamicParticle particleScript=newLiquidParticle.GetComponent<DynamicParticle>(); // Get the particle script
 			particleScript.SetLifeTime(PARTICLE_LIFETIME); //Set each particle lifetime
 			particleScript.SetState(particlesState); //Set the particle State
-			newLiquidParticle.transform.position=transform.position;// Relocate to the spawner position
+			newLiquidParticle.transform.position= new Vector2(Random.Range(transform.position.x-0.1f, transform.position.x+0.1f), transform.position.y);// Relocate to the spawner position
 			newLiquidParticle.transform.parent=particlesParent;// Add the particle to the parent container
 
 			yield return new WaitForSeconds (SPAWN_INTERVAL);
