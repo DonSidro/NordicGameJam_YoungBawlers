@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerControls : MonoBehaviour {
 
+	public string PlayerController;
+
 	Rigidbody2D body;
 	float distToGround;
 	float playerWidth;
@@ -15,6 +17,7 @@ public class PlayerControls : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		
 		body = GetComponent<Rigidbody2D> ();
 		playerWidth = GetComponent<BoxCollider2D> ().bounds.extents.x;
 		distToGround = GetComponent<BoxCollider2D> ().bounds.extents.y;
@@ -40,30 +43,36 @@ public class PlayerControls : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// jump
-		if (Input.GetKey (KeyCode.UpArrow) && isGrounded()) {
+		if (Input.GetButton ("PS4_X" + PlayerController) && isGrounded ()) {
 			if (body.velocity.y == 0)
 				body.AddForce (new Vector2 (0, jumpForce), ForceMode2D.Impulse);
 		}
+			// running
+		Vector2 direction = new Vector2 (Input.GetAxisRaw ("PS4_Horizontal"+ PlayerController), 0);
+			
 
-		// body slam
-		//if (Input.GetKey(KeyCode.DownArrow)) 
-		//	input. -= 1.0f;
+			
 
-		//make sure the input doesn't exceed 1 if we go diagonally
-		//if (input != Vector2.zero)
-		//	input.Normalize();
+			// body slam
+			//if (Input.GetKey(KeyCode.DownArrow)) 
+			//	input. -= 1.0f;
 
-		float vx = body.velocity.x;
+			//make sure the input doesn't exceed 1 if we go diagonally
+			//if (input != Vector2.zero)
+			//	input.Normalize();
 
-		// apply friction
-		vx -= vx * friction * Time.deltaTime;
-		// apply acceleration
-		vx += Input.GetAxisRaw ("Horizontal") * acceleration * Time.deltaTime;
-		// update velocity
-		body.velocity = new Vector2 (vx, body.velocity.y);
+			float vx = body.velocity.x;
 
-		//We store the velocity in our own variable, just so we can print it on screen
-		//velocity = body.velocity;
-	}
+			// apply friction
+			vx -= vx * friction * Time.deltaTime;
+			// apply acceleration
+		vx += Input.GetAxisRaw ("PS4_Horizontal"+ PlayerController) * acceleration * Time.deltaTime;
+			// update velocity
+			body.velocity = new Vector2 (vx, body.velocity.y);
+
+			//We store the velocity in our own variable, just so we can print it on screen
+			//velocity = body.velocity;
+		}
 		
 }
+
