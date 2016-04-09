@@ -44,7 +44,7 @@ public class PlayerControls : MonoBehaviour {
 	void Update () {
 		// jump
 		if (Input.GetButton ("PS4_X" + PlayerController) && isGrounded ()) {
-			if (body.velocity.y == 0)
+			if (Mathf.Abs(body.velocity.y) <= 0.001)
 				body.AddForce (new Vector2 (0, jumpForce), ForceMode2D.Impulse);
 		}
 			// running
