@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MenuPlayerSelectionScreen : MonoBehaviour {
 
-	public MenuAnimation[] players;
+	public GameObject[] players;
 
 	// Use this for initialization
 	void Start () {
@@ -13,8 +13,12 @@ public class MenuPlayerSelectionScreen : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		for (int i = 1; i < 5; i++) {
-			if (Input.GetButton ("PS4_Start" + i)) {
-				print ("Start");
+			if (Input.GetButton ("PS4_X" + i)) {
+				players [i - 1].SetActive (true);
+			}
+
+			if (Input.GetButton ("PS4_O" + i)) {
+				players [i - 1].SetActive (false);
 			}
 		}
 	}
