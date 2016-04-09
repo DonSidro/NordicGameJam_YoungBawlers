@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Tank : MonoBehaviour {
+public class Tank1 : MonoBehaviour {
 
 	public Transform spawn;
 	public int CountWater;
