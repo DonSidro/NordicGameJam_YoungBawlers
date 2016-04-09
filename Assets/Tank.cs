@@ -3,20 +3,21 @@ using System.Collections;
 
 public class Tank : MonoBehaviour {
 
-	public transform spawn;
+	public Transform spawn;
+	public int CountWater;
 
 	void OnTriggerEnter2D(Collider2D col){
 	
-		if (col.CompareTag ("Team1") && col.gameObject.GetComponent<"done something here">().water > 0) {
+		if (col.CompareTag ("Team1") && col.gameObject.GetComponent<CollectorScript>().water > 0) {
 			
-			col.gameObject.GetComponent<"done something here">().water--;
-			GameObject newLiquidParticle=(GameObject)Instantiate(Resources.Load("LiquidPhysics/DynamicParticle")); //Spawn a particle
-			newLiquidParticle.GetComponent<Rigidbody2D>().AddForce( particleForce); //Add our custom force
+			col.gameObject.GetComponent<CollectorScript>().water--;
+			CountWater++;
+			GameObject newLiquidParticle=(GameObject)Instantiate(Resources.Load("LiquidPhysics/DynamicParticle 1")); //Spawn a particle
+
 			DynamicParticle particleScript=newLiquidParticle.GetComponent<DynamicParticle>(); // Get the particle script
-			particleScript.SetLifeTime(PARTICLE_LIFETIME); //Set each particle lifetime
-			particleScript.SetState(particlesState); //Set the particle State
-			newLiquidParticle.transform.position= new Vector2(Random.Range(spawn.position.x-0.01f, spawn.position.x+0.01f), spawn.position.y);// Relocate to the spawner position
-			newLiquidParticle.transform.parent=particlesParent;
+			particleScript.SetLifeTime(99999999999f); //Set each particle lifetime
+			newLiquidParticle.transform.position= new Vector2(spawn.position.x, spawn.position.y);// Relocate to the spawner position
+			newLiquidParticle.transform.parent=transform;
 		}
 	}
 }
