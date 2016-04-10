@@ -5,11 +5,17 @@ public class Tank1 : MonoBehaviour {
 
 	public Transform spawn;
 	public int CountWater;
+	SoundSystem sound;
+
+	void Start(){
+		sound = GameObject.Find ("Controller").GetComponent<SoundSystem> ();
+	}
 
 	void OnTriggerEnter2D(Collider2D col){
 	
 		if (col.CompareTag ("Team1") && col.gameObject.GetComponent<CollectorScript>().water > 0) {
-			
+			sound.PlaySound ("Throw");
+
 			col.gameObject.GetComponent<CollectorScript>().water--;
 			CountWater++;
 			GameObject newLiquidParticle=(GameObject)Instantiate(Resources.Load("LiquidPhysics/DynamicParticle 1")); //Spawn a particle
