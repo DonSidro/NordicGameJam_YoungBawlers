@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     float minJumpVelocity;
     public Vector3 velocity;
     float velocityXSmoothing;
+	 public bool dashing = false;
 
     Controller2D controller;
 
@@ -104,7 +105,11 @@ public class Player : MonoBehaviour
         }
 		if (Input.GetButton("PS4_O"+ player) && !controller.collisions.below){
 			velocity.y = -maxJumpHeight * 10;
+			dashing = true;
+
 		}
+		if (controller.collisions.below)
+			dashing = false;
 		if (Input.GetButton("PS4_X"+ player))
         {
             if (velocity.y > minJumpVelocity)
@@ -120,6 +125,8 @@ public class Player : MonoBehaviour
         if (controller.collisions.above || controller.collisions.below)
         {
             velocity.y = 0;
+
+
         }
 
     }
