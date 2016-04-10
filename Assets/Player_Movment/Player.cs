@@ -40,102 +40,204 @@ public class Player : MonoBehaviour
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
         maxJumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
         minJumpVelocity = Mathf.Sqrt(2 * Mathf.Abs(gravity) * minJumpHeight);
-        print("Gravity: " + gravity + "  Jump Velocity: " + maxJumpVelocity);
     }
 
     void Update()
     {
+		//ProcessController ();
+		ProcessPC ();
+    }
+
+	void ProcessController(){
 		Vector2 input = new Vector2(Input.GetAxisRaw("PS4_Horizontal" + player), Input.GetAxisRaw("PS4_Vertical" + player));
-        int wallDirX = (controller.collisions.left) ? -1 : 1;
+		int wallDirX = (controller.collisions.left) ? -1 : 1;
 
-        float targetVelocityX = input.x * moveSpeed;
-        velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+		float targetVelocityX = input.x * moveSpeed;
+		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
-        bool wallSliding = false;
-        if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
-        {
-            wallSliding = true;
+		bool wallSliding = false;
+		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
+		{
+			wallSliding = true;
 
-            if (velocity.y < -wallSlideSpeedMax)
-            {
-                velocity.y = -wallSlideSpeedMax;
-            }
+			if (velocity.y < -wallSlideSpeedMax)
+			{
+				velocity.y = -wallSlideSpeedMax;
+			}
 
-            if (timeToWallUnstick > 0)
-            {
-                velocityXSmoothing = 0;
-                velocity.x = 0;
+			if (timeToWallUnstick > 0)
+			{
+				velocityXSmoothing = 0;
+				velocity.x = 0;
 
-                if (input.x != wallDirX && input.x != 0)
-                {
-                    timeToWallUnstick -= Time.deltaTime;
-                }
-                else
-                {
-                    timeToWallUnstick = wallStickTime;
-                }
-            }
-            else
-            {
-                timeToWallUnstick = wallStickTime;
-            }
+				if (input.x != wallDirX && input.x != 0)
+				{
+					timeToWallUnstick -= Time.deltaTime;
+				}
+				else
+				{
+					timeToWallUnstick = wallStickTime;
+				}
+			}
+			else
+			{
+				timeToWallUnstick = wallStickTime;
+			}
 
-        }
+		}
 
 		if (Input.GetButtonDown("PS4_X"+ player))
-        {
-            if (wallSliding)
-            {
+		{
+			if (wallSliding)
+			{
 				sound.PlaySound ("Jump3");
-                if (wallDirX == input.x)
-                {
-                    velocity.x = -wallDirX * wallJumpClimb.x;
-                    velocity.y = wallJumpClimb.y;
-                }
-                else if (input.x == 0)
-                {
-                    velocity.x = -wallDirX * wallJumpOff.x;
-                    velocity.y = wallJumpOff.y;
-                }
-                else
-                {
-                    velocity.x = -wallDirX * wallLeap.x;
-                    velocity.y = wallLeap.y;
-                }
-            }
-            if (controller.collisions.below)
-            {
+				if (wallDirX == input.x)
+				{
+					velocity.x = -wallDirX * wallJumpClimb.x;
+					velocity.y = wallJumpClimb.y;
+				}
+				else if (input.x == 0)
+				{
+					velocity.x = -wallDirX * wallJumpOff.x;
+					velocity.y = wallJumpOff.y;
+				}
+				else
+				{
+					velocity.x = -wallDirX * wallLeap.x;
+					velocity.y = wallLeap.y;
+				}
+			}
+			if (controller.collisions.below)
+			{
 				sound.PlaySound ("Jump3");
-                velocity.y = maxJumpVelocity;
-            }
-        }
+				velocity.y = maxJumpVelocity;
+			}
+		}
 		if (Input.GetButtonDown("PS4_O"+ player) && !controller.collisions.below){
 			velocity.y = -maxJumpHeight * 10;
 			dashing = true;
 			sound.PlaySound ("Dash2");
 		}
 		if (controller.collisions.below) {
+			if(dashing){
+				Camera.main.GetComponentInParent<Animation> ().Play ("Shake");
+				sound.PlaySound ("Hit");
+			}
 			dashing = false;
 		}
 		if (Input.GetButtonDown("PS4_X"+ player))
-        {
-            if (velocity.y > minJumpVelocity)
-            {
+		{
+			if (velocity.y > minJumpVelocity)
+			{
 				sound.PlaySound ("Jump3");
-                velocity.y = minJumpVelocity;
-            }
-        }
+				velocity.y = minJumpVelocity;
+			}
+		}
 
 
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime, input);
+		velocity.y += gravity * Time.deltaTime;
+		controller.Move(velocity * Time.deltaTime, input);
 
-        if (controller.collisions.above || controller.collisions.below)
-        {
-            velocity.y = 0;
+		if (controller.collisions.above || controller.collisions.below)
+		{
+			velocity.y = 0;
+		}
+	}
+
+	void ProcessPC(){
+		Vector2 input = new Vector2(Input.GetAxisRaw("PC_Horizontal"+player), Input.GetAxisRaw("PC_Vertical"+player));
+
+		int wallDirX = (controller.collisions.left) ? -1 : 1;
+
+		float targetVelocityX = input.x * moveSpeed;
+		velocity.x = Mathf.SmoothDamp(velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
+
+		bool wallSliding = false;
+		if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0)
+		{
+			wallSliding = true;
+
+			if (velocity.y < -wallSlideSpeedMax)
+			{
+				velocity.y = -wallSlideSpeedMax;
+			}
+
+			if (timeToWallUnstick > 0)
+			{
+				velocityXSmoothing = 0;
+				velocity.x = 0;
+
+				if (input.x != wallDirX && input.x != 0)
+				{
+					timeToWallUnstick -= Time.deltaTime;
+				}
+				else
+				{
+					timeToWallUnstick = wallStickTime;
+				}
+			}
+			else
+			{
+				timeToWallUnstick = wallStickTime;
+			}
+
+		}
+
+		if (Input.GetButtonDown("PC"+ player+"_UP"))
+		{
+			if (wallSliding)
+			{
+				sound.PlaySound ("Jump3");
+				if (wallDirX == input.x)
+				{
+					velocity.x = -wallDirX * wallJumpClimb.x;
+					velocity.y = wallJumpClimb.y;
+				}
+				else if (input.x == 0)
+				{
+					velocity.x = -wallDirX * wallJumpOff.x;
+					velocity.y = wallJumpOff.y;
+				}
+				else
+				{
+					velocity.x = -wallDirX * wallLeap.x;
+					velocity.y = wallLeap.y;
+				}
+			}
+			if (controller.collisions.below)
+			{
+				sound.PlaySound ("Jump3");
+				velocity.y = maxJumpVelocity;
+			}
+		}
+		if (Input.GetButtonDown("PC"+ player+"_DOWN") && !controller.collisions.below){
+			velocity.y = -maxJumpHeight * 10;
+			dashing = true;
+			sound.PlaySound ("Dash2");
+		}
+		if (controller.collisions.below) {
+			if(dashing){
+				Camera.main.GetComponentInParent<Animation> ().Play ("Shake");
+				sound.PlaySound ("Hit");
+			}
+			dashing = false;
+		}
+		if (Input.GetButtonDown("PC"+ player+"_UP"))
+		{
+			if (velocity.y > minJumpVelocity)
+			{
+				sound.PlaySound ("Jump3");
+				velocity.y = minJumpVelocity;
+			}
+		}
 
 
-        }
+		velocity.y += gravity * Time.deltaTime;
+		controller.Move(velocity * Time.deltaTime, input);
 
-    }
+		if (controller.collisions.above || controller.collisions.below)
+		{
+			velocity.y = 0;
+		}
+	}
 }

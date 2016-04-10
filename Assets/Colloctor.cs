@@ -18,8 +18,6 @@ public class Colloctor : MonoBehaviour {
 		}
 
 		if (col.gameObject.tag != transform.tag && col.GetComponent<Player>().dashing && GetComponent<CollectorScript>().water != 0) {
-			Camera.main.GetComponent<Animation> ().Play ("Shake");
-			sound.PlaySound ("Hit");
 			col.GetComponent<CollectorScript>().water = col.GetComponent<CollectorScript>().water + GetComponent<CollectorScript> ().water;
 			GetComponent<CollectorScript> ().water = 0;
 			col.GetComponent<Player> ().dashing = false;

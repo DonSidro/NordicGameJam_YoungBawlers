@@ -13,12 +13,9 @@ public class MenuPlayerSelection : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButton ("PS4_X" + PlayerController)) {
-			joined = true;
-			joinedText.enabled = true;
-			notJoinedText.enabled = false;
-			ma.active = true;
-		}
+		PC ();
+		//Controller ();
+
 		/*
 		if (Input.GetButton ("PS4_O" + PlayerController)) {
 			joined = false;
@@ -27,5 +24,23 @@ public class MenuPlayerSelection : MonoBehaviour {
 			ma.active = false;
 		}
 		*/
+	}
+
+	void PC(){
+		if (Input.GetButton ("PC"+ PlayerController+"_UP")) {
+			joined = true;
+			joinedText.enabled = true;
+			notJoinedText.enabled = false;
+			ma.active = true;
+		}
+	}
+
+	void Controller(){
+		if (Input.GetButton ("PS4_X" + PlayerController)) {
+			joined = true;
+			joinedText.enabled = true;
+			notJoinedText.enabled = false;
+			ma.active = true;
+		}
 	}
 }

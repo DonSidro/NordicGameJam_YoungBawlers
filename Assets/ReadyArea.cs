@@ -19,7 +19,6 @@ public class ReadyArea : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D(Collider2D col){
-		print ("WTF?");
 		countdown.text = "Starting in ... 5";
 		int id = col.GetComponent<Player> ().player;
 		readyPlayers.Remove (id);
