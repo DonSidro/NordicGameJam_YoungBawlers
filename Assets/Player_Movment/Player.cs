@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
 
         }
 
-		if (Input.GetButton("PS4_X"+ player))
+		if (Input.GetButtonDown("PS4_X"+ player))
         {
             if (wallSliding)
             {
@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
                 velocity.y = maxJumpVelocity;
             }
         }
-		if (Input.GetButton("PS4_O"+ player) && !controller.collisions.below){
+		if (Input.GetButtonDown("PS4_O"+ player) && !controller.collisions.below){
 			velocity.y = -maxJumpHeight * 10;
 			dashing = true;
 			sound.PlaySound ("Dash2");
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
 		if (controller.collisions.below) {
 			dashing = false;
 		}
-		if (Input.GetButton("PS4_X"+ player))
+		if (Input.GetButtonDown("PS4_X"+ player))
         {
             if (velocity.y > minJumpVelocity)
             {
