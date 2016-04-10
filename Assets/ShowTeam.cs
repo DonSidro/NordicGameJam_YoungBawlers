@@ -14,13 +14,7 @@ public class ShowTeam : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		if (PlayerCounter.instance.count == 2)
-			TWOPlayers ();
-		if (PlayerCounter.instance.count == 3)
-			THREEPlayers ();
-		if (PlayerCounter.instance.count == 4)
-			FOURPlayers ();
-
+		
 	}
 	
 	// Update is called once per frame
@@ -56,10 +50,7 @@ public class ShowTeam : MonoBehaviour {
 		players [PlayerCounter.instance.ij [1]].SetActive (true);
 		players [PlayerCounter.instance.ij [0]].tag = "Team1";
 		players [PlayerCounter.instance.ij [1]].tag = "Team2";
-		img [0].gameObject.SetActive (true);
-		img [1].gameObject.SetActive (true);
-		img[0].color = players [PlayerCounter.instance.ij [0]].GetComponent<Player>().color;
-		img[1].color = players [PlayerCounter.instance.ij [1]].GetComponent<Player>().color;
+
 	}
 	void THREEPlayers(){
 		players [PlayerCounter.instance.ij [0]].SetActive (true);
@@ -68,13 +59,7 @@ public class ShowTeam : MonoBehaviour {
 		players [PlayerCounter.instance.ij [0]].tag = "Team1";
 		players [PlayerCounter.instance.ij [1]].tag = "Team2";
 		players [PlayerCounter.instance.ij [2]].tag = "Team1";
-		img [0].gameObject.SetActive (true);
-		img [1].gameObject.SetActive (true);
-		img [2].gameObject.SetActive (true);
-		
-		img[0].color = players [PlayerCounter.instance.ij [0]].GetComponent<Player>().color;
-		img[1].color = players [PlayerCounter.instance.ij [1]].GetComponent<Player>().color;
-		img[2].color = players [PlayerCounter.instance.ij [2]].GetComponent<Player>().color;
+
 		
 	}
 	void FOURPlayers(){
@@ -86,15 +71,7 @@ public class ShowTeam : MonoBehaviour {
 		players [PlayerCounter.instance.ij [1]].tag = "Team2";
 		players [PlayerCounter.instance.ij [2]].tag = "Team1";
 		players [PlayerCounter.instance.ij [3]].tag = "Team2";
-		img [0].gameObject.SetActive (true);
-		img [1].gameObject.SetActive (true);
-		img [2].gameObject.SetActive (true);
-		img [3].gameObject.SetActive (true);
 
-		img[0].color = players [PlayerCounter.instance.ij [0]].GetComponent<Player>().color;
-		img[1].color = players [PlayerCounter.instance.ij [1]].GetComponent<Player>().color;
-		img[2].color = players [PlayerCounter.instance.ij [2]].GetComponent<Player>().color;
-		img[3].color = players [PlayerCounter.instance.ij [3]].GetComponent<Player>().color;
 	}
 
 }
