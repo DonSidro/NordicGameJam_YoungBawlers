@@ -4,6 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Controller2D))]
 public class Player : MonoBehaviour
 {
+	public Color color;
 	public int player;
     public float maxJumpHeight = 4;
     public float minJumpHeight = 1;

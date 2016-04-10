@@ -14,7 +14,7 @@ public class ReadyArea : MonoBehaviour {
 		int id = col.GetComponent<Player> ().player;
 		readyPlayers.Add (id);
 		PlayerCounter.instance.count++;
-		PlayerCounter.instance.ij[PlayerCounter.instance.count] = id;
+		PlayerCounter.instance.ij[PlayerCounter.instance.count-1] = id;
 
 	}
 
@@ -24,7 +24,7 @@ public class ReadyArea : MonoBehaviour {
 		int id = col.GetComponent<Player> ().player;
 		readyPlayers.Remove (id);
 		PlayerCounter.instance.count--;
-		PlayerCounter.instance.ij[PlayerCounter.instance.count] = id;
+		PlayerCounter.instance.ij[PlayerCounter.instance.count-1] = id;
 
 
 	}
