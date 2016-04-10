@@ -44,8 +44,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-		//ProcessController ();
-		ProcessPC ();
+		ProcessController ();
+		//ProcessPC ();
     }
 
 	void ProcessController(){
