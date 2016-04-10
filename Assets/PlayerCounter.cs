@@ -5,7 +5,7 @@ public class PlayerCounter : MonoBehaviour {
 
 	static public PlayerCounter instance;
 	// Use this for initialization
-	public List<GameObject> readyPlayers = new List<GameObject>();
+	public int [] ij;
 	public int count;
 	void Awake () {
 		

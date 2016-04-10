@@ -4,53 +4,22 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class ShowTeam : MonoBehaviour {
 
-	public Image p1;
-	public Image p2;
-	public Image p3;
-	public Image p4;
+	public Image[] img;
 
 	public Text tm;
-	public GameObject pc1;
-	public GameObject pc2;
-	public GameObject pc3;
-	public GameObject pc4;
+	public GameObject[] players;
+
 
 	public float TimeToPlay;
 
 	// Use this for initialization
 	void Awake () {
-		string[] e = Input.GetJoystickNames ();
-		if (e.Length == 2) {
-			p1.gameObject.SetActive (true);
-			p4.gameObject.SetActive (true);
-			p1.color = Color.red;
-			p4.color = Color.blue;
-			pc1.SetActive (true);
-			pc2.SetActive (true);
-		} else if (e.Length == 3) {
-			p1.gameObject.SetActive (true);
-			p3.gameObject.SetActive (true);
-			p4.gameObject.SetActive (true);
-			p1.color = Color.red;
-			p3.color = Color.yellow;
-			p4.color = Color.blue;
-			pc1.SetActive (true);
-			pc2.SetActive (true);
-			pc3.SetActive (true);
-		} else if (e.Length == 4) {
-			p1.gameObject.SetActive (true);
-			p2.gameObject.SetActive (true);
-			p3.gameObject.SetActive (true);
-			p4.gameObject.SetActive (true);
-			p1.color = Color.red;
-			p2.color = Color.yellow;
-			p3.color = Color.blue;
-			p4.color = Color.green;
-			pc1.SetActive (true);
-			pc2.SetActive (true);
-			pc3.SetActive (true);
-			pc4.SetActive (true);
-		}
+		if (PlayerCounter.instance.count == 2)
+			TWOPlayers ();
+		if (PlayerCounter.instance.count == 3)
+			THREEPlayers ();
+		if (PlayerCounter.instance.count == 4)
+			FOURPlayers ();
 
 	}
 	
@@ -80,6 +49,22 @@ public class ShowTeam : MonoBehaviour {
 
 	void loadLoby(){
 		SceneManager.LoadScene (0);
+	}
+
+	void TWOPlayers(){
+		players [PlayerCounter.instance.ij [0]].SetActive (true);
+		players [PlayerCounter.instance.ij [1]].SetActive (true);
+	}
+	void THREEPlayers(){
+		players [PlayerCounter.instance.ij [0]].SetActive (true);
+		players [PlayerCounter.instance.ij [1]].SetActive (true);
+		players [PlayerCounter.instance.ij [2]].SetActive (true);
+	}
+	void FOURPlayers(){
+		players [PlayerCounter.instance.ij [0]].SetActive (true);
+		players [PlayerCounter.instance.ij [1]].SetActive (true);
+		players [PlayerCounter.instance.ij [2]].SetActive (true);
+		players [PlayerCounter.instance.ij [3]].SetActive (true);
 	}
 
 }

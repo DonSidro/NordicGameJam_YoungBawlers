@@ -13,7 +13,8 @@ public class ReadyArea : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		int id = col.GetComponent<Player> ().player;
 		readyPlayers.Add (id);
-
+		PlayerCounter.instance.count++;
+		PlayerCounter.instance.ij[PlayerCounter.instance.count] = id;
 
 	}
 
@@ -22,6 +23,8 @@ public class ReadyArea : MonoBehaviour {
 		countdown.text = "Starting in ... 5";
 		int id = col.GetComponent<Player> ().player;
 		readyPlayers.Remove (id);
+		PlayerCounter.instance.count--;
+		PlayerCounter.instance.ij[PlayerCounter.instance.count] = id;
 
 
 	}
