@@ -27,10 +27,13 @@ public class Player : MonoBehaviour
     float velocityXSmoothing;
 	 public bool dashing = false;
 
+	SoundSystem sound;
+
     Controller2D controller;
 
     void Start()
     {
+		sound = GameObject.Find ("Controller").GetComponent<SoundSystem> ();
         controller = GetComponent<Controller2D>();
 
         gravity = -(2 * maxJumpHeight) / Mathf.Pow(timeToJumpApex, 2);
@@ -82,6 +85,7 @@ public class Player : MonoBehaviour
         {
             if (wallSliding)
             {
+				sound.PlaySound ("Jump3");
                 if (wallDirX == input.x)
                 {
                     velocity.x = -wallDirX * wallJumpClimb.x;
@@ -100,20 +104,23 @@ public class Player : MonoBehaviour
             }
             if (controller.collisions.below)
             {
+				sound.PlaySound ("Jump3");
                 velocity.y = maxJumpVelocity;
             }
         }
 		if (Input.GetButton("PS4_O"+ player) && !controller.collisions.below){
 			velocity.y = -maxJumpHeight * 10;
 			dashing = true;
-
+			sound.PlaySound ("Dash2");
 		}
-		if (controller.collisions.below)
+		if (controller.collisions.below) {
 			dashing = false;
+		}
 		if (Input.GetButton("PS4_X"+ player))
         {
             if (velocity.y > minJumpVelocity)
             {
+				sound.PlaySound ("Jump3");
                 velocity.y = minJumpVelocity;
             }
         }
