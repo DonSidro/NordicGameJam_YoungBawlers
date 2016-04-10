@@ -19,11 +19,13 @@ public class MenuPlayerSelection : MonoBehaviour {
 			notJoinedText.enabled = false;
 			ma.active = true;
 		}
+		/*
 		if (Input.GetButton ("PS4_O" + PlayerController)) {
 			joined = false;
 			joinedText.enabled = false;
 			notJoinedText.enabled = true;
 			ma.active = false;
 		}
+		*/
 	}
 }

@@ -16,10 +16,11 @@ public class MenuPlayerSelectionScreen : MonoBehaviour {
 			if (Input.GetButton ("PS4_X" + i)) {
 				players [i - 1].SetActive (true);
 			}
-
+			/*
 			if (Input.GetButton ("PS4_O" + i)) {
 				players [i - 1].SetActive (false);
 			}
+			*/
 		}
 	}
 
