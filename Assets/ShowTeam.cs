@@ -9,10 +9,13 @@ public class ShowTeam : MonoBehaviour {
 	public Image p3;
 	public Image p4;
 
+	public Text tm;
 	public GameObject pc1;
 	public GameObject pc2;
 	public GameObject pc3;
 	public GameObject pc4;
+
+	public float TimeToPlay;
 
 	// Use this for initialization
 	void Awake () {
@@ -48,11 +51,29 @@ public class ShowTeam : MonoBehaviour {
 			pc3.SetActive (true);
 			pc4.SetActive (true);
 		}
-	
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		TimeToPlay -= Time.deltaTime;
+
+		if (TimeToPlay < 0) {
+			if (FindObjectOfType<Tank1> ().CountWater > FindObjectOfType<Tank2> ().CountWater) {
+				tm.text = "TEAM 1 WINS!";
+			} else if (FindObjectOfType<Tank1> ().CountWater < FindObjectOfType<Tank2> ().CountWater) {
+				tm.text = "TEAM 2 WINS!";
+			} else {
+				tm.text = "DRAW!";
+			}
+
+
+		} else {
+			tm.text = TimeToPlay.ToString ("F0");
+		}
+
 	
 	}
+
+
 }

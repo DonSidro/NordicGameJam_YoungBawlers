@@ -23,7 +23,7 @@ public class WaterWaveSpawner : MonoBehaviour {
 				c = Random.Range (0, Spawns.Length);
 				//Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
 				Quaternion spawnRotation = Quaternion.identity;
-				Instantiate (water, Spawns[c].transform.position, spawnRotation);
+				Instantiate (water, new Vector2 (Random.Range(Spawns[c].transform.position.x -0.01f,Spawns[c].transform.position.x + 0.01f),Spawns[c].transform.position.y), spawnRotation);
 				yield return new WaitForSeconds (spawnWait);
 			}
 			yield return new WaitForSeconds (waveWait);
