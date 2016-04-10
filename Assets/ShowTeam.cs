@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class ShowTeam : MonoBehaviour {
 
 	public Image p1;
@@ -61,10 +61,13 @@ public class ShowTeam : MonoBehaviour {
 		if (TimeToPlay < 0) {
 			if (FindObjectOfType<Tank1> ().CountWater > FindObjectOfType<Tank2> ().CountWater) {
 				tm.text = "TEAM 1 WINS!";
+				Invoke ("loadLoby", 3);
 			} else if (FindObjectOfType<Tank1> ().CountWater < FindObjectOfType<Tank2> ().CountWater) {
 				tm.text = "TEAM 2 WINS!";
+				Invoke ("loadLoby", 3);
 			} else {
 				tm.text = "DRAW!";
+				Invoke ("loadLoby", 3);
 			}
 
 
@@ -75,5 +78,8 @@ public class ShowTeam : MonoBehaviour {
 	
 	}
 
+	void loadLoby(){
+		SceneManager.LoadScene (0);
+	}
 
 }
