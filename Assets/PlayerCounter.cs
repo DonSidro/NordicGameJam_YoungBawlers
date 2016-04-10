@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 public class PlayerCounter : MonoBehaviour {
 
 	static public PlayerCounter instance;
 	// Use this for initialization
-	public int[] playerCount = new int[3];
+	public List<GameObject> readyPlayers = new List<GameObject>();
+	public int count;
 	void Awake () {
 		
 		if (instance == null) {
@@ -14,9 +15,7 @@ public class PlayerCounter : MonoBehaviour {
 			Destroy (this);
 		}
 		DontDestroyOnLoad(transform.gameObject);
-		playerCount [0] = 0;
-		playerCount [1] = 0;
-		playerCount [2] = 0;
-		playerCount [3] = 0;
+
+	
 	}
 }
